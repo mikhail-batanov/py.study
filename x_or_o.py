@@ -1,4 +1,10 @@
-﻿def pprint():
+def revect():
+    return [[s[0], s[1], s[2]], [s[0], s[4], s[8]], [s[0], s[3], s[6]],
+            [s[1], s[4], s[7]], [s[2], s[5], s[8]], [s[2], s[4], s[6]],
+            [s[3], s[4], s[5]], [s[6], s[7], s[8]]]
+
+
+def pprint():
     i = 0
     while i < 8:
         print (s[i], s[i+1], s[i+2])
@@ -6,10 +12,8 @@
 
 
 def check():
+    vect = revect()
     j = 0
-    vect = [[s[0], s[1], s[2]], [s[0], s[4], s[8]], [s[0], s[3], s[6]],
-            [s[1], s[4], s[7]], [s[2], s[5], s[8]], [s[2], s[4], s[6]],
-            [s[3], s[4], s[5]], [s[6], s[7], s[8]]]
     while j < len(vect):
         if vect[j].count('X') == 3 or vect[j].count('O') == 3:
             return 1
@@ -19,76 +23,84 @@ def check():
 
 
 def step():
-    win = 0
-    while not win:
-        switch, ops = 'X', 0
+    while 1 == 1:
         if not any(e in range(len(s)+1) for e in s):
             print('Ничья')
-            exit()
-        print('Ходят крестики, укажите цифру для хода:')
+            break
+        ops = 0
         while not ops:
-            number = input()
+            number = input(
+                'Ход крестиков, укажите доступную цифру для хода: ', )
             if number.isdigit():
                 number = int(number)
                 if number >= 1 and number <= 9:
                     if s[number-1] != 'X' and s[number-1] != 'O':
                         ops = 1
-                    else:
-                        print('Укажите доступную цифру для хода:')
-                else:
-                    print('Укажите доступную цифру для хода:')
-            else:
-                print('Укажите цифру для хода:')
-        s[number-1] = switch
-        win = check()
-        if win:
-            switch = 'O'
-            continue
-        pprint()
-        comp_step()
-        win = check()
-        if win:
-            switch = 'X'
-    if switch == 'X':
-        print('Нолики выиграли!')
-    else:
-        if switch == 'O':
+        s[number-1] = 'X'
+        if check():
+            pprint()
             print('Крестики выиграли!')
+            break
+        comp_step()
+        if check():
+            print('Нолики выиграли!')
+            break
 
 
 def comp_step():
     j, k = 0, 0
-    pars = [[s[0], s[1], s[2]], [s[0], s[4], s[8]], [s[0], s[3], s[6]],
-            [s[1], s[4], s[7]], [s[2], s[5], s[8]], [s[2], s[4], s[6]],
-            [s[3], s[4], s[5]], [s[6], s[7], s[8]]]
-    omni = [[0, 1, 2], [0, 4, 8], [0, 3, 6],
-            [1, 4, 7], [2, 5, 8], [2, 4, 6],
-            [3, 4, 5], [6, 7, 8]]
+    pars = revect()
+    cs = 0
     while j < len(pars):
-        if pars[j].count('X') > 1 and pars[j].count('O') < 1:
+        if pars[j].count('X') < 1 and pars[j].count('O') > 1 and not cs:
+            while k < len(pars[j]):
+                if pars[j][k] != 'O':
+                    s[omni[j][k]] = 'O'
+                    cs = 1
+                    break
+                k = k + 1
+        j = j + 1
+    if s[4] == 'O' or s[4] == 'X' and not cs:
+        if s[0] != 'X' and s[0] != 'O' and not cs:
+            s[0] = 'O'
+            cs = 1
+        if s[2] != 'X' and s[2] != 'O' and not cs:
+            s[2] = 'O'
+            cs = 1
+        if s[6] != 'X' and s[6] != 'O' and not cs:
+            s[6] = 'O'
+            cs = 1
+        if s[8] != 'X' and s[8] != 'O' and not cs:
+            s[8] = 'O'
+            cs = 1
+    j, k = 0, 0
+    while j < len(pars):
+        if pars[j].count('X') > 1 and pars[j].count('O') < 1 and not cs:
             while k < len(pars[j]):
                 if pars[j][k] != 'X':
                     s[omni[j][k]] = 'O'
-                    print('Ход ноликов:')
-                    pprint()
-                    return
+                    cs = 1
+                    break
                 k = k + 1
         j = j + 1
     else:
-        if s[4] != 'O' and s[4] != 'X':
+        if s[4] != 'O' and s[4] != 'X' and not cs:
             s[4] = 'O'
-            print('Ход ноликов:')
-            pprint()
+            cs = 1
         else:
             while k < len(s):
-                if s[k] != 'X' and s[k] != 'O':
+                if s[k] != 'X' and s[k] != 'O' and not cs:
                     s[k] = 'O'
-                    print('Ход ноликов:')
-                    pprint()
-                    return
+                    cs = 1
+                    break
                 k = k + 1
+    print('Ход ноликов:')
+    pprint()
 
 s = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+omni = [[0, 1, 2], [0, 4, 8], [0, 3, 6],
+        [1, 4, 7], [2, 5, 8], [2, 4, 6],
+        [3, 4, 5], [6, 7, 8]]
 print('Это поле для игры:')
 pprint()
 step()
