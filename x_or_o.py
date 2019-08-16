@@ -60,6 +60,16 @@ def comp_step():
                     break
                 k = k + 1
         j = j + 1
+    j, k = 0, 0
+    while j < len(pars):
+        if pars[j].count('X') > 1 and pars[j].count('O') < 1 and not cs:
+            while k < len(pars[j]):
+                if pars[j][k] != 'X':
+                    s[omni[j][k]] = 'O'
+                    cs = 1
+                    break
+                k = k + 1
+        j = j + 1
     if s[4] == 'O' or s[4] == 'X' and not cs:
         if s[0] != 'X' and s[0] != 'O' and not cs:
             s[0] = 'O'
@@ -73,27 +83,15 @@ def comp_step():
         if s[8] != 'X' and s[8] != 'O' and not cs:
             s[8] = 'O'
             cs = 1
-    j, k = 0, 0
-    while j < len(pars):
-        if pars[j].count('X') > 1 and pars[j].count('O') < 1 and not cs:
-            while k < len(pars[j]):
-                if pars[j][k] != 'X':
-                    s[omni[j][k]] = 'O'
-                    cs = 1
-                    break
-                k = k + 1
-        j = j + 1
-    else:
-        if s[4] != 'O' and s[4] != 'X' and not cs:
-            s[4] = 'O'
+    if s[4] != 'O' and s[4] != 'X' and not cs:
+        s[4] = 'O'
+        cs = 1
+    while k < len(s):
+        if s[k] != 'X' and s[k] != 'O' and not cs:
+            s[k] = 'O'
             cs = 1
-        else:
-            while k < len(s):
-                if s[k] != 'X' and s[k] != 'O' and not cs:
-                    s[k] = 'O'
-                    cs = 1
-                    break
-                k = k + 1
+            break
+        k = k + 1
     print('Ход ноликов:')
     pprint()
 
