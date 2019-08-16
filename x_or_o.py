@@ -75,6 +75,12 @@ def comp_step():
                     break
                 k = k + 1
         j = j + 1
+    if s[0] == X and s[8] == X and s[1] != O and s[1] != X and not cs:
+        s[1] = O
+        cs = 1
+    if s[2] == X and s[6] == X and s[7] != O and s[7] != X and not cs:
+        s[7] = O
+        cs = 1
     if s[4] == O or s[4] == X and not cs:
         if s[0] != X and s[0] != O and not cs:
             s[0] = O
