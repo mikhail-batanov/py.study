@@ -61,8 +61,31 @@ class check:
             return False
 
 
-class computer:
-    def step(self):
+class step:
+    def player(self):
+        while 1 == 1:
+            if check.draw(0):
+                print('Ничья.')
+                break
+            number = input(
+                'Ход крестиков, укажите доступную цифру для хода: ', )
+            while not check.move(number):
+                number = input(
+                    'Ход крестиков, укажите доступную цифру для хода: ', )
+            number = int(number)
+            field.board[number - 1] = field.X
+            if check.draw(0):
+                field.board_output(0)
+                print('Ничья.')
+                break
+            if check.win(0):
+                field.board_output(0)
+                break
+            step.computer(0)
+            if check.win(0):
+                break
+
+    def computer(self):
         j, k = 0, 0
         pars = field.win_vectors(0)
         cs = 0
@@ -122,31 +145,6 @@ class computer:
         field.board_output(0)
 
 
-class player:
-    def step(self):
-        while 1 == 1:
-            if check.draw(0):
-                print('Ничья.')
-                break
-            number = input(
-                'Ход крестиков, укажите доступную цифру для хода: ', )
-            while not check.move(number):
-                number = input(
-                    'Ход крестиков, укажите доступную цифру для хода: ', )
-            number = int(number)
-            field.board[number - 1] = field.X
-            if check.draw(0):
-                field.board_output(0)
-                print('Ничья.')
-                break
-            if check.win(0):
-                field.board_output(0)
-                break
-            computer.step(0)
-            if check.win(0):
-                break
-
-
 print ('Это поле для игры:')
 field.board_output(0)
-player.step(0)
+step.player(0)
