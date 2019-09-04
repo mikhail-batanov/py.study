@@ -118,14 +118,6 @@ class computer:
                 and field.board[4] != field.X and not cs:
             field.board[4] = field.O
             cs = 1
-        while k < len(field.board):
-            # ход на первую свободную ячейку по порядковому номеру
-            if field.board[k] != field.X \
-                    and field.board[k] != field.O and not cs:
-                field.board[k] = field.O
-                cs = 1
-                break
-            k = k + 1
         print('Ход ноликов:')
         field.board_output(0)
 
@@ -144,8 +136,8 @@ class player:
             number = int(number)
             field.board[number - 1] = field.X
             if check.draw(0):
-                print('Ничья.')
                 field.board_output(0)
+                print('Ничья.')
                 break
             if check.win(0):
                 field.board_output(0)
