@@ -1,4 +1,4 @@
-# Решение задачи "Time Converter (24h to 12h)" на пайчекио
+# Решение задачи "Time Converter (24h to 12h)" в пайчекио
 # Автор - M. Batanov, 11.09.19
 
 
